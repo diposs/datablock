@@ -8,9 +8,9 @@ import { Polybase } from "@polybase/client";
 import { Auth } from "@polybase/auth";
 
 const polybase = new Polybase({
-defaultNamespace: process.env.NEXT_PUBLIC_NAMESPACE,
+defaultNamespace: `${process.env.NEXT_PUBLIC_NAMESPACE}`,
 }); 
-const auth = new Auth();
+const auth = typeof window !== "undefined" ? new Auth() : null;
 export default function App({ Component, pageProps }: AppProps) {
  
   return (
