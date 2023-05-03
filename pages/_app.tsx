@@ -29,9 +29,9 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       >
          <PolybaseProvider polybase={polybase}>
-         {auth && (<AuthProvider auth={auth} polybase={polybase}>)}
+         {auth && (<AuthProvider auth={auth} polybase={polybase}>
         <Component {...pageProps} />
-        </AuthProvider>
+        </AuthProvider>)}
         </PolybaseProvider>
       </MantineProvider>
     </>
