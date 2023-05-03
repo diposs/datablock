@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       >
          <PolybaseProvider polybase={polybase}>
-         <AuthProvider auth={auth!} polybase={polybase}>
+         <AuthProvider auth={auth} polybase={polybase}>
         <Component {...pageProps} />
         </AuthProvider>
         </PolybaseProvider>
