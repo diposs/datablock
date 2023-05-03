@@ -10,7 +10,7 @@ import { Auth } from "@polybase/auth";
 const polybase = new Polybase({
 defaultNamespace: process.env.NEXT_PUBLIC_NAMESPACE,
 }); 
-const auth = typeof window !== "undefined" ? new Auth() : null;
+const auth = new Auth();
 export default function App({ Component, pageProps }: AppProps) {
  
   return (
@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       >
          <PolybaseProvider polybase={polybase}>
-         <AuthProvider auth={auth} polybase={polybase}>
+         <AuthProvider auth={auth!} polybase={polybase}>
         <Component {...pageProps} />
         </AuthProvider>
         </PolybaseProvider>
