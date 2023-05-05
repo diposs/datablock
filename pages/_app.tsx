@@ -1,4 +1,3 @@
-import React from "react";
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { MantineProvider, createEmotionCache } from '@mantine/core';
@@ -15,7 +14,7 @@ const myCache = createEmotionCache({ key: 'mantine' });
 export default function App({ Component, pageProps }: AppProps) {
  
   return (
-      <MantineProvider
+     <MantineProvider
         withGlobalStyles
         withNormalizeCSS
         emotionCache={myCache}
@@ -23,12 +22,12 @@ export default function App({ Component, pageProps }: AppProps) {
           /** Put your mantine theme override here */
           colorScheme: 'light',
         }}
-      >
-         <PolybaseProvider polybase={polybase}>
-         {auth && (<AuthProvider auth={auth} polybase={polybase}>
+     >
+      <PolybaseProvider polybase={polybase}>
+       <AuthProvider auth={auth!} polybase={polybase}>
         <Component {...pageProps} />
-        </AuthProvider>)}
-        </PolybaseProvider>
-      </MantineProvider>
+       </AuthProvider>
+      </PolybaseProvider>
+     </MantineProvider>
   );
 }
