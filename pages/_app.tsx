@@ -14,9 +14,7 @@ const myCache = createEmotionCache({ key: 'mantine' });
 export default function App({ Component, pageProps }: AppProps) {
  
   return (
-   <PolybaseProvider polybase={polybase}>
-    <AuthProvider auth={auth!} polybase={polybase}>
-      <MantineProvider
+     <MantineProvider
         withGlobalStyles
         withNormalizeCSS
         emotionCache={myCache}
@@ -24,10 +22,12 @@ export default function App({ Component, pageProps }: AppProps) {
           /** Put your mantine theme override here */
           colorScheme: 'light',
         }}
-      >
+     >
+      <PolybaseProvider polybase={polybase}>
+       <AuthProvider auth={auth} polybase={polybase}>
         <Component {...pageProps} />
-      </MantineProvider>
-     </AuthProvider>
-    </PolybaseProvider>
+       </AuthProvider>
+      </PolybaseProvider>
+     </MantineProvider>
   );
 }
