@@ -9,7 +9,7 @@ export default function Home() {
     <AppShell header= {
       <>
 
-      <FirstHeader />
+      <FirstHeader logoSrc='' backgroundImage='' />
       <SearchBar />
 
       </>
