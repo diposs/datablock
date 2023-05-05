@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
  
   return (
    <PolybaseProvider polybase={polybase}>
-    {auth && (<AuthProvider auth={auth} polybase={polybase}>
+    <AuthProvider auth={auth!} polybase={polybase}>
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
       >
         <Component {...pageProps} />
       </MantineProvider>
-     </AuthProvider>)}
+     </AuthProvider>
     </PolybaseProvider>
   );
 }
