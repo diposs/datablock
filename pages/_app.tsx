@@ -23,11 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
           colorScheme: 'light',
         }}
       >
-         <PolybaseProvider polybase={polybase}>
-         {auth && (<AuthProvider auth={auth} polybase={polybase}>
         <Component {...pageProps} />
-        </AuthProvider>)}
-        </PolybaseProvider>
       </MantineProvider>
   );
 }
