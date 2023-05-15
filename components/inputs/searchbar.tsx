@@ -10,6 +10,7 @@ export function SearchBar() {
 
   return (
     <Input
+     miw="60vw"
       placeholder="Search"
       value={query}
       onChange={handleQueryChange}

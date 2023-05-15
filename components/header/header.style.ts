@@ -8,7 +8,8 @@ export default createStyles ((theme) => ({
         backgroundRepeat: 'no-repeat',
         alignContent: 'center',
         justifyContent: 'center',
-        color:'white'
+        color:'white', 
+        borderBottom: 'none'
       },
 })
 )
