@@ -16,7 +16,7 @@ export function SearchBar() {
       onChange={handleQueryChange}
       variant="filled"
       radius="xl"
-      size="lg"
+      size="xl"
     />
   );
 }
