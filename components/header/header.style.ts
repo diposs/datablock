@@ -8,12 +8,8 @@ export default createStyles ((theme) => ({
         backgroundRepeat: 'no-repeat',
         alignContent: 'center',
         justifyContent: 'center',
-<<<<<<< LiveCodeSession1
         color:'white', 
         borderBottom: 'none'
-=======
-        color:'white'
->>>>>>> main
       },
 })
 )

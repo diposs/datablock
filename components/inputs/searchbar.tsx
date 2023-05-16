@@ -10,10 +10,7 @@ export function SearchBar() {
 
   return (
     <Input
-<<<<<<< LiveCodeSession1
-     miw="60vw"
-=======
->>>>>>> main
+      miw="60vw"
       placeholder="Search"
       value={query}
       onChange={handleQueryChange}
