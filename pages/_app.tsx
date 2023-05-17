@@ -1,4 +1,3 @@
-import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { MantineProvider, createEmotionCache } from '@mantine/core';
 import { PolybaseProvider,AuthProvider } from "@polybase/react";
