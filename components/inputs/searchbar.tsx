@@ -1,6 +1,7 @@
 import { SetStateAction, useState } from 'react';
+import { IconSearch } from '@tabler/icons-react';
 import { Input } from '@mantine/core';
-
+import { Searchiconright } from '../icons/searchIcon'
 export function SearchBar() {
   const [query, setQuery] = useState('');
 
@@ -10,6 +11,8 @@ export function SearchBar() {
 
   return (
     <Input
+      icon={< IconSearch size="2.125rem" />}
+      rightSection={< Searchiconright /> }
       miw="60vw"
       placeholder="Search"
       value={query}
