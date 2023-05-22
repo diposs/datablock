@@ -5,7 +5,7 @@ export function MenuGroup() {
 const { classes } = useStyles();
 return (
     <Group spacing="xs" className={classes.links} >
-      Get Started
+      Home 
     </Group>
 );
 }
