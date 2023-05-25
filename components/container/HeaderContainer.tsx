@@ -12,12 +12,12 @@ export function HeaderContainer()  {
   const { auth } = useAuth();
   const [opened, { open, close }] = useDisclosure(false);
   const [isLoggedIn] = useIsAuthenticated();
-  const polybase= usePolybase(); 
-  async function signInUser() {
-  await auth.signIn();
+  const polybase = usePolybase(); 
+  const signInUser =  async() => {
+    const res = await auth.signIn();
+    let publicKey: any  = res!.publicKey;
         try {
-            const user = await polybase.collection('User').record(auth!.state!.publicKey!).get();
-            console.log('User', user);
+            const user = await polybase.collection('User').record(publicKey).get();
         } catch (e) {
           console.log(e);
         }
