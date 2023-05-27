@@ -1,9 +1,11 @@
-import { Button } from "@mantine/core";
-import useStyles from '../style/GreaterThanSmall.style'
+import { Button, Group} from "@mantine/core";
+import useStyles from '../style/GreaterThanSmall.style';
 
 export const GsButton = ({ ...rest }) =>  {
     const { classes } = useStyles();
     return (
-        <Button radius="xl" h={30}  className={classes.links} { ...rest }>GetStarted</Button>
+    <Group className={classes.links}>
+        <Button radius="xl" h={30}  { ...rest }>GetStarted</Button>
+    </Group>
     );
 }

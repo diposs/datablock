@@ -1,16 +1,14 @@
-import {Burger} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { ActionIcon } from '@mantine/core';
+import { IconMenu2 } from '@tabler/icons-react';
 import useStyles from '../style/SmallerThanSmall.style'
 
 
 
-export function Burgy() {
-    const [opened, { toggle }] = useDisclosure(false);
+export const Burgy = ({ ...rest }) => {
     const { classes } = useStyles();
 return  (
-    <Burger opened={opened}
-    onClick={toggle}
-    className={classes.burgerCss}
-    />
+    <ActionIcon color="violet" size="lg" radius="md" variant="transparent" className={classes.burgerCss} { ...rest } >
+        <IconMenu2 size="1.625rem" />
+    </ActionIcon>
 );
 }

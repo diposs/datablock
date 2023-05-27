@@ -6,5 +6,10 @@ export default createStyles ((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
       },
+      burgerCss: {
+        [theme.fn.largerThan('sm')]: {
+          display: 'none',
+        },
+      },
 })
 )
