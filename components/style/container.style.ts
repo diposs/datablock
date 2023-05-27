@@ -5,6 +5,7 @@ export default createStyles ((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        backgroundColor: '#ffffff',
       },
       burgerCss: {
         [theme.fn.largerThan('sm')]: {
