@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container,Modal,Button,Stack, Burger, Loader} from '@mantine/core';
+import { Container,Modal,Button,Stack, Burgers} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import  useStyles  from '../style/container.style'
 import { HeadGroup } from '../inputs/HeaderGroup';
@@ -20,14 +20,11 @@ export function HeaderContainer()  {
     let publicKey: any  = res!.publicKey;
       try {
           const user = await polybase.collection('User').record(publicKey).get();
-          console.log(user,'data')
       } catch (e) {
         console.log(e);
       }
       toggle();
     }
-  
-  console.log('auth',value);
   useEffect(() => {
     auth!.onAuthUpdate((authState) => {
       if (authState!) {
@@ -37,13 +34,11 @@ export function HeaderContainer()  {
       }
     })
   })
-  // const { data, loading, error } = useDocument(isLoggedIn && openedburger ? polybase.collection('User').record(value!) : null,);
-  // console.log(data,'data')
   return (
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
-    {isLoggedIn ? (<>{opened ? <Loader color="violet" variant="bars"/> : (<>{value}</>)}</>) : ( <GsButton onClick={signInUser} /> )}
+    {isLoggedIn ? (<>{opened ? <>jj</> : {value}}</>) : ( <GsButton onClick={signInUser} /> )}
     <Burger opened={openedburger} onClick={toggle} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
       <Stack align="stretch" spacing="xs">

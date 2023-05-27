@@ -1,5 +1,5 @@
 import { Button, Group} from "@mantine/core";
-import useStyles from '../style/GreaterThanSmall.style'
+import useStyles from '../style/GreaterThanSmall.style';
 
 export const GsButton = ({ ...rest }) =>  {
     const { classes } = useStyles();

@@ -1,44 +1,11 @@
-import {Group, Menu, Center, rem, createStyles,} from '@mantine/core';
+import {Group, Menu, Center} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
 import {items} from '../menu/menucontent';
-
-const useStyles = createStyles((theme) => ({
-  links: {
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
-    },
-  },
-
-  burger: {
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
-    },
-  },
-
-  link: {
-    display: 'block',
-    lineHeight: 1,
-    padding: `${rem(8)} ${rem(12)}`,
-    borderRadius: theme.radius.sm,
-    textDecoration: 'none',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
-
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    },
-  },
-
-  linkLabel: {
-    marginRight: rem(5),
-  },
-}));
+import useStyles from '../style/MenuCss.style';
 
 export function MenuGroup() {
     const { classes } = useStyles();
-    console.log(items,'items');
     const [opened, { toggle }] = useDisclosure(false);
     const itemed = items.map((link) => {
         const menuItems = link.links?.map((item) => (
@@ -47,16 +14,14 @@ export function MenuGroup() {
     
         if (menuItems) {
         return (
-            <Menu key={link.label} trigger="hover" transitionProps={{ exitDuration: 0 }} withinPortal>
+            <Menu key={link.label} trigger="hover" transitionProps={{ exitDuration: 0 }}>
             <Menu.Target>
                 <a
                 href={link.link}
-                className={classes.link}
-                onClick={(event) => event.preventDefault()}
-                >
+                className={classes.link}>
                 <Center>
                     <span className={classes.linkLabel}>{link.label}</span>
-                    <IconChevronDown size={rem(12)} stroke={1.5} />
+                    <IconChevronDown size="12px" stroke={1.5} />
                 </Center>
                 </a>
             </Menu.Target>
@@ -69,9 +34,7 @@ export function MenuGroup() {
         <a
             key={link.label}
             href={link.link}
-            className={classes.link}
-            onClick={(event) => event.preventDefault()}
-        >
+            className={classes.link}>
             {link.label}
         </a>
         );
