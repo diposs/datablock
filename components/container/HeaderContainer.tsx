@@ -47,6 +47,7 @@ export function HeaderContainer()  {
         <Button color="red" size="lg">Close</Button>
       </Stack>
     </Modal>
+    <Drawer opened={openedburger} onClose={toggle} position="bottom" size='60vh' withCloseButton={false} scrollAreaComponent={ScrollArea.Autosize}/> 
   </Container>
   );
 }; 
