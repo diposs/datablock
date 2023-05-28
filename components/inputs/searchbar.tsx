@@ -14,7 +14,6 @@ export function SearchBar() {
 
   return (
     <Input
-      component="form"
       icon={< IconSearch size="2.125rem" />}
       rightSection={< Searchiconright type="submit"/> }
       miw="60vw"
