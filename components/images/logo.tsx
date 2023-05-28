@@ -1,7 +1,9 @@
-import { Image } from '@mantine/core';
+import { Image, AspectRatio } from '@mantine/core';
 
 export function HeaderLogo() {
   return (
-    <Image src="/HeadLogo.svg" alt="HeaderLogo" height="45px" width="78px"/>
+    <AspectRatio ratio={78 / 45}>
+    <Image src="/HeadLogo.svg" alt="HeaderLogo" height={45} width={78}/>
+    </AspectRatio>
   );
 }
