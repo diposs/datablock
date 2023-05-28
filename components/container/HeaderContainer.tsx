@@ -38,6 +38,7 @@ export function HeaderContainer()  {
     })
   })
   return (
+    <>
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
@@ -54,5 +55,6 @@ export function HeaderContainer()  {
       {content}
     </Drawer>
   </Container>
+      </>
   );
 }; 
