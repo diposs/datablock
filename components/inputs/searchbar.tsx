@@ -14,6 +14,7 @@ export function SearchBar() {
       icon={< IconSearch size="2.125rem" />}
       rightSection={< Searchiconright /> }
       miw="60vw"
+      data-autofocus
       placeholder="Search"
       value={query}
       onChange={handleQueryChange}
