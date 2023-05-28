@@ -14,6 +14,9 @@ export function HeaderContainer()  {
   const [openedburger, { toggle }] = useDisclosure(false);
   const [value, setValue] = useState<string | null | undefined>('');
   const [isLoggedIn] = useIsAuthenticated();
+  const content = Array(100)
+    .fill(0)
+    .map((_, index) => <p key={index}>Drawer with scroll</p>);
   const polybase = usePolybase(); 
   const signInUser =  async() => {
     const res = await auth.signIn();
@@ -47,7 +50,9 @@ export function HeaderContainer()  {
         <Button color="red" size="lg">Close</Button>
       </Stack>
     </Modal>
-    <Drawer opened={openedburger} onClose={toggle} position="bottom" size='60vh' withCloseButton={false} scrollAreaComponent={ScrollArea.Autosize}/> 
+    <Drawer opened={openedburger} onClose={toggle} position="bottom" size='60vh' withCloseButton={false} scrollAreaComponent={ScrollArea.Autosize}>
+      {content}
+    </Drawer>
   </Container>
   );
 }; 
