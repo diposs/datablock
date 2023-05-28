@@ -15,7 +15,7 @@ export function SearchBar() {
   return (
     <Input
       icon={< IconSearch size="2.125rem" />}
-      rightSection={< Searchiconright type="submit"/> }
+      rightSection={< Searchiconright type="submit" onSubmit={form.onSubmit((values) => console.log(values))} /> }
       miw="60vw"
       data-autofocus
       placeholder="Search"
@@ -23,7 +23,6 @@ export function SearchBar() {
       radius="xl"
       size="xl"
       {...form.getInputProps('search')}
-      onSubmit={form.onSubmit((values) => console.log(values))}
     />
   );
 }
