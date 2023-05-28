@@ -5,7 +5,7 @@ import {SearchBar} from  '../inputs/searchbar';
 export function SearchContainer() {
     return (
         <>
-        <Center h="97vh">
+        <Center h="97%">
             <SearchBar/>
         </Center>
         </>
