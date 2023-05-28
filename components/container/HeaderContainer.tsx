@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container,Modal,Button,Stack,Burger,Drawer,ScrollArea} from '@mantine/core';
+import { Container,Modal,Button,Stack,Burger,Drawer} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import  useStyles  from '../style/container.style'
 import { HeadGroup } from '../inputs/HeaderGroup';
@@ -50,7 +50,7 @@ export function HeaderContainer()  {
         <Button color="red" size="lg">Close</Button>
       </Stack>
     </Modal>
-    <Drawer opened={openedburger} onClose={toggle} position="bottom" size='60vh' title="MENU" withCloseButton={false} scrollAreaComponent={ScrollArea.Autosize}>
+    <Drawer opened={openedburger} onClose={toggle} position="bottom" size='60vh' title="MENU" withCloseButton={false}>
       {content}
     </Drawer>
   </Container>
