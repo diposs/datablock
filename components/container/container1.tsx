@@ -1,11 +1,11 @@
-import { Center } from '@mantine/core';
+import { Center,rem } from '@mantine/core';
 import {SearchBar} from  '../inputs/searchbar';
 
 
 export function SearchContainer() {
     return (
         <>
-        <Center h="97%">
+        <Center h={rem(97%)} >
             <SearchBar/>
         </Center>
         </>
