@@ -6,12 +6,12 @@ import { HeadGroup } from '../inputs/HeaderGroup';
 import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
 import { useAuth, usePolybase, useIsAuthenticated } from "@polybase/react";
+export const [openedburger, { toggle }] = useDisclosure(false);
 
 export function HeaderContainer()  {
   const { classes } = useStyles();
   const { auth } = useAuth();
   const [opened, { open, close }] = useDisclosure(false);
-  const [openedburger, { toggle }] = useDisclosure(false);
   const [value, setValue] = useState<string | null | undefined>('');
   const [isLoggedIn] = useIsAuthenticated();
   const content = Array(100)
