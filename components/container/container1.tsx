@@ -2,10 +2,10 @@ import { Center } from '@mantine/core';
 import {SearchBar} from  '../inputs/searchbar';
 
 
-export function SearchContainer() {
+export const SearchContainer = ({ ...rest }) =>  {
     return (
         <>
-        <Center h='97vh'>
+        <Center { ...rest }>
             <SearchBar/>
         </Center>
         </>
