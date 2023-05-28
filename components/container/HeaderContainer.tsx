@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container,Modal,Button,Stack,Burger,Drawer} from '@mantine/core';
+import { Container,Modal,Button,Stack,Burger,Drawer,ScrollArea} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import  useStyles  from '../style/container.style'
 import { HeadGroup } from '../inputs/HeaderGroup';
@@ -38,7 +38,6 @@ export function HeaderContainer()  {
     })
   })
   return (
-    <>
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
@@ -55,6 +54,5 @@ export function HeaderContainer()  {
       {content}
     </Drawer>
   </Container>
-      </>
   );
 }; 
