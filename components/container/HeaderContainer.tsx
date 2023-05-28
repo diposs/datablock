@@ -50,7 +50,7 @@ export function HeaderContainer()  {
         <Button color="red" size="lg">Close</Button>
       </Stack>
     </Modal>
-    <Drawer opened={openedburger} onClose={toggle} position="bottom" size='60vh' title="MENU" withCloseButton={false}>
+    <Drawer opened={openedburger} onClose={toggle} className={classes.burgerCss} position="bottom" size='60vh' title="MENU" withCloseButton={false}>
       {content}
     </Drawer>
   </Container>
