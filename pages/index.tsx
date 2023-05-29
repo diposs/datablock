@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from 'next'
+import type { GetStaticProps } from 'next'
 import { initializeStore } from '../stores/datastate'
 import {SearchContainer} from '../components/container/container1'
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetStaticProps = () => {
   const zustandStore = initializeStore()
 
   return {
