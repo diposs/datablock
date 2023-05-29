@@ -29,7 +29,7 @@ export function HeaderContainer()  {
       } catch (e) {
         console.log(e);
       }
-      toggle();
+      open();
     }
   useEffect(() => {
     auth!.onAuthUpdate((authState) => {
