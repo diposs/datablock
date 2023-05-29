@@ -12,7 +12,6 @@ export function HeaderContainer()  {
   const { classes } = useStyles();
   const { auth } = useAuth();
   const [opened, { open, close }] = useDisclosure(false);
-  const dataState = dataStore((state: any) => state);
   const openedburger = useStore((store) => store.mobilemenucontrol);
   const update = useStore((store) => store.update);
   const toggled =(() => {
