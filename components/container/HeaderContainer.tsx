@@ -30,23 +30,14 @@ export function HeaderContainer()  {
           const user = await polybase.collection('User').record(publicKey).get();
       } catch (e) {
         await polybase.collection("User").create(["testing"]);
-        console.log(e);
+        console.log('dipo');
       }
-    }
-  useEffect(() => {
-    auth!.onAuthUpdate((authState) => {
-      if (authState!) {
-        setValue(authState.publicKey);
-      } else {
-        setValue('');
-      }
-    })
-  })
+    };
   return (
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
-    {isLoggedIn ? (<>{opened ? <>jj</> :<>{value}</>}</>) : ( <GsButton onClick={signInUser} /> )}
+    {isLoggedIn ? (<>{opened ? <>jj</> :<>dd</>}</>) : ( <GsButton onClick={signInUser} /> )}
     <Burger opened={openedburger} onClick={toggled} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
       <Stack align="stretch" spacing="xs">
