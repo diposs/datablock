@@ -7,4 +7,4 @@ const dataStore = create<DataBlockType>((set) => ({
     removeMobilemenucontrol: () => set((state) => ({ ...state, mobilemenucontrol: false })),
 }));
 
-export { nearStore };
+export { dataStore };
