@@ -5,7 +5,7 @@ import  useStyles  from '../style/container.style'
 import { HeadGroup } from '../inputs/HeaderGroup';
 import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
-import { useAuth, usePolybase, useIsAuthenticated } from "@polybase/react";
+import { useAuth, usePolybase, useIsAuthenticated, useDocument} from "@polybase/react";
 import { useStore } from '../../stores/datastate'
 
 interface userss {
@@ -35,15 +35,10 @@ export function HeaderContainer()  {
   const signInUser =  async() => {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
-    const user = await polybase.collection<userss>('User').record(publicKey).get();
-    const { data } = user;
-    const exists = user.data === null
-    console.log(user, 'user');
-    console.log({ data }, 'data');
-    console.log(exists, 'exists');
-    if (exists){
-      await polybase.collection("User").create(["testing"]);
-    }
+    const { data, error, loading } =
+    useDocument<userss>(polybase.collection<userss>('User').record(publicKey));
+    console.log( data.data, 'data');
+    console.log( error , 'error');
     };
   return (
   <Container className={classes.inner} fluid>
