@@ -9,7 +9,7 @@ export default function Home() {
   );
 }
 
-export const getServerSideProps: GetStaticProps = () => {
+export const GetStaticProps: GetStaticProps = () => {
   const zustandStore = initializeStore()
 
   return {
