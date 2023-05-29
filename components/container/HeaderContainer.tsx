@@ -62,7 +62,7 @@ export function HeaderContainer()  {
         <Button color="red" size="lg">Close</Button>
       </Stack>
     </Modal>
-    <Drawer opened={openedburger} onClose={toggled} className={{root:classes.burgerCss, content:classes.controldd,}} position="bottom" returnFocus size='60vh' title="`" withCloseButton={false}>
+    <Drawer opened={openedburger} onClose={toggled} className={{root: classes.burgerCss, content: classes.controldd,}} position="bottom" size='60vh' title="  " withCloseButton={false}>
       {content}
     </Drawer>
   </Container>
