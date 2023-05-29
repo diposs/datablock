@@ -29,7 +29,7 @@ export function HeaderContainer()  {
       try {
           const user = await polybase.collection('User').record(publicKey).get();
       } catch (e) {
-        await db.collection("User").create(["testing"]);
+        await polybase.collection("User").create(["testing"]);
         console.log(e);
       }
     }
