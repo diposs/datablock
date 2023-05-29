@@ -27,8 +27,10 @@ export function HeaderContainer()  {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
     const user = await polybase.collection('User').record(publicKey).get();
+    const { data } = user;
     const exists = user.data === null
     console.log(user, 'user');
+    console.log({ data }, 'data');
     console.log(exists, 'exists');
     if (exists){
       await polybase.collection("User").create(["testing"]);
