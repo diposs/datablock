@@ -12,7 +12,6 @@ interface userss {
   compileUser: boolean;
   firstLogin: number;
   latestLoginAction: string[];
-  name: string;
   publicKey : any;
   searches: string[];
 
