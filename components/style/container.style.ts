@@ -13,10 +13,7 @@ export default createStyles ((theme) => ({
         },
       },
       controldd: {
-        [theme.fn.largerThan('sm')]: {
-          display: 'none',
-          borderRadius: '32px 32px 0px 0px',
-        },
+          borderRadius: '32px 32px 0px 0px!important',
       },
 })
 )
