@@ -1,5 +1,5 @@
 import create from "zustand";
-import { DataBlockType } from "../types/stores";
+import { DataBlockType } from "../stateType/stores";
 
 const dataStore = create<DataBlockType>((set) => ({
     mobilemenucontrol: false,
