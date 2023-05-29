@@ -1,17 +1,14 @@
-import type { GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import { initializeStore } from '../stores/datastate'
 import {SearchContainer} from '../components/container/container1'
 export default function Home() {
   return (
-  <>
       <SearchContainer />
-      </>
   );
 }
 
-export const GetStaticProps: GetStaticProps = () => {
+export const getStaticProps: GetStaticProps = () => {
   const zustandStore = initializeStore()
-
   return {
     props: {
       // the "stringify and then parse again" piece is required as next.js
