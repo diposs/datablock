@@ -26,12 +26,13 @@ export function HeaderContainer()  {
   const signInUser =  async() => {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
-      try {
-          const user = await polybase.collection('User').record(publicKey).get();
-      } catch (e) {
-        await polybase.collection("User").create(["testing"]);
-        console.log('dipo');
-      }
+    const user = await polybase.collection('User').record(publicKey).get();
+    const exists = user.data === null
+    console.log(user, 'user');
+    console.log(exists, 'exists');
+    if (exists){
+      await polybase.collection("User").create(["testing"]);
+    }
     };
   return (
   <Container className={classes.inner} fluid>
