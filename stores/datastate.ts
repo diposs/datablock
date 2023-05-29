@@ -26,7 +26,10 @@ export const useStore = <T>(selector: (state: StoreInterface) => T) => {
   return useZustandStore(store, selector)
 }
 
-createStore<StoreInterface>(persist(
+export const initializeStore = (
+  preloadedState: Partial<StoreInterface> = {}
+) => {
+  return createStore<StoreInterface>(persist(
 (set, get) => ({
     ...getDefaultInitialState(),
     ...preloadedState,
