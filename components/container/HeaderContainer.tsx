@@ -19,7 +19,7 @@ export function HeaderContainer()  {
   })
   const [value, setValue] = useState<string | null | undefined>('');
   const [isLoggedIn] = useIsAuthenticated();
-  const content = Array(100)
+  const content = Array(12)
     .fill(0)
     .map((_, index) => <p key={index}>Drawer with scroll</p>);
   const polybase = usePolybase(); 
