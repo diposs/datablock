@@ -8,6 +8,16 @@ import { GsButton } from '../buttons/GSButton';
 import { useAuth, usePolybase, useIsAuthenticated } from "@polybase/react";
 import { useStore } from '../../stores/datastate'
 
+interface userss {
+  compileUser: boolean;
+  firstLogin: number;
+  latestLoginAction: string[];
+  name: string;
+  publicKey : any;
+  searches: string[];
+
+}
+
 export function HeaderContainer()  {
   const { classes } = useStyles();
   const { auth } = useAuth();
@@ -26,7 +36,7 @@ export function HeaderContainer()  {
   const signInUser =  async() => {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
-    const user = await polybase.collection('User').record(publicKey).get();
+    const user = await polybase.collection<userss>('User').record(publicKey).get();
     const { data } = user;
     const exists = user.data === null
     console.log(user, 'user');
