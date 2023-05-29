@@ -32,14 +32,25 @@ export function HeaderContainer()  {
     .fill(0)
     .map((_, index) => <p key={index}>Drawer with scroll</p>);
   const polybase = usePolybase();
+  if(isLoggedIn){
   const { data, error, loading } =
-    useDocument<userss>(polybase.collection<userss>('User').record(publicKey));
+    useDocument<userss>(polybase.collection<userss>('User').record(value));
     console.log( data.data, 'data');
     console.log( error , 'error');
+   }
   const signInUser =  async() => {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
     };
+  useEffect(() => {
+    auth!.onAuthUpdate((authState) => {
+      if (authState!) {
+        setValue(authState.publicKey);
+      } else {
+        setValue('');
+      }
+    })
+  })
   return (
   <Container className={classes.inner} fluid>
     <HeadGroup/>
@@ -53,7 +64,7 @@ export function HeaderContainer()  {
         <Button color="red" size="lg">Close</Button>
       </Stack>
     </Modal>
-    <Drawer opened={openedburger} onClose={toggled} className={classes.burgerCss} position="bottom" returnFocus size='60vh' title="MENU" withCloseButton={false}>
+    <Drawer opened={openedburger} onClose={toggled} className={classes.controldd} position="bottom" returnFocus size='60vh' title="" withCloseButton={false}>
       {content}
     </Drawer>
   </Container>
