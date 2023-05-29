@@ -31,14 +31,14 @@ export function HeaderContainer()  {
   const content = Array(12)
     .fill(0)
     .map((_, index) => <p key={index}>Drawer with scroll</p>);
-  const polybase = usePolybase(); 
-  const signInUser =  async() => {
-    const res = await auth.signIn();
-    let publicKey: any  = res!.publicKey;
-    const { data, error, loading } =
+  const polybase = usePolybase();
+  const { data, error, loading } =
     useDocument<userss>(polybase.collection<userss>('User').record(publicKey));
     console.log( data.data, 'data');
     console.log( error , 'error');
+  const signInUser =  async() => {
+    const res = await auth.signIn();
+    let publicKey: any  = res!.publicKey;
     };
   return (
   <Container className={classes.inner} fluid>
