@@ -5,7 +5,7 @@ import { HeaderContainer } from '../container/HeaderContainer';
 export function  FirstHeader() {
   const { classes } = useStyles();
   return (
-<Header height="2vh" className={classes.styles21}>
+<Header height="0vh" className={classes.styles21}>
 <HeaderContainer/>
 </Header>
   );
