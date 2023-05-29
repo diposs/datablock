@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import { createStore, useStore as useZustandStore } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface StoreInterface {
   mobilemenucontrol: boolean
@@ -25,10 +26,8 @@ export const useStore = <T>(selector: (state: StoreInterface) => T) => {
   return useZustandStore(store, selector)
 }
 
-export const initializeStore = (
-  preloadedState: Partial<StoreInterface> = {}
-) => {
-  return createStore<StoreInterface>((set, get) => ({
+createStore<StoreInterface>(persist(
+(set, get) => ({
     ...getDefaultInitialState(),
     ...preloadedState,
     update: (mobilemenucontrol) => {
@@ -36,5 +35,9 @@ export const initializeStore = (
         mobilemenucontrol: !!mobilemenucontrol,
       })
     },
-  }))
+  }),
+  {
+      name: 'food-storage', // unique name
+      getStorage: createJSONStorage(() => sessionStorage), // (optional) by default the 'localStorage' is used
+    }))
 }
