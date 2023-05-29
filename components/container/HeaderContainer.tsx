@@ -6,13 +6,15 @@ import { HeadGroup } from '../inputs/HeaderGroup';
 import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
 import { useAuth, usePolybase, useIsAuthenticated } from "@polybase/react";
-
-const [openedburger, { toggle }] = useDisclosure(false);
+import {dataStore}  from "../../stores/datastate"
 
 export function HeaderContainer()  {
   const { classes } = useStyles();
   const { auth } = useAuth();
   const [opened, { open, close }] = useDisclosure(false);
+  const dataState = dataStore((state) => state);
+  const openedburger = dataState.mobilemenucontrol;
+  const toggled = dataState.setMobilemenucontrol(!openedburger);
   const [value, setValue] = useState<string | null | undefined>('');
   const [isLoggedIn] = useIsAuthenticated();
   const content = Array(100)
@@ -43,7 +45,7 @@ export function HeaderContainer()  {
     <HeadGroup/>
     <MenuGroup/>
     {isLoggedIn ? (<>{opened ? <>jj</> :<>{value}</>}</>) : ( <GsButton onClick={signInUser} /> )}
-    <Burger opened={openedburger} onClick={toggle} className={classes.burgerCss} />
+    <Burger opened={openedburger} onClick={toggled} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
       <Stack align="stretch" spacing="xs">
         <Button color="blue" size="lg">Sign Up Without Username</Button>
@@ -51,10 +53,9 @@ export function HeaderContainer()  {
         <Button color="red" size="lg">Close</Button>
       </Stack>
     </Modal>
-    <Drawer opened={openedburger} onClose={toggle} className={classes.burgerCss} position="bottom" size='60vh' title="MENU" withCloseButton={false}>
+    <Drawer opened={openedburger} onClose={toggled} className={classes.burgerCss} position="bottom" size='60vh' title="MENU" withCloseButton={false}>
       {content}
     </Drawer>
   </Container>
   );
 }; 
-export const burgerstate = openedburger;
