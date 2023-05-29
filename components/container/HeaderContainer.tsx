@@ -32,12 +32,10 @@ export function HeaderContainer()  {
     .fill(0)
     .map((_, index) => <p key={index}>Drawer with scroll</p>);
   const polybase = usePolybase();
-  if(isLoggedIn){
   const { data, error, loading } =
     useDocument<userss>(polybase.collection<userss>('User').record(value));
     console.log( data.data, 'data');
     console.log( error , 'error');
-   }
   const signInUser =  async() => {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
