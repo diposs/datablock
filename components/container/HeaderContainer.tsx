@@ -15,7 +15,7 @@ export function HeaderContainer()  {
   const dataState = dataStore((state: any) => state);
   const openedburger = useStore((store) => store.mobilemenucontrol);
   const update = useStore((store) => store.update);
-  const toggled(() => {
+  const toggled =(() => {
     update(!openedburger)
   })
   const [value, setValue] = useState<string | null | undefined>('');
