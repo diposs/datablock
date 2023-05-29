@@ -1,5 +1,5 @@
 import create from "zustand";
-import { NearStoreType } from "../types/stores";
+import { DataBlockType } from "../types/stores";
 
 const dataStore = create<DataBlockType>((set) => ({
     mobilemenucontrol: false,
