@@ -56,4 +56,4 @@ export function HeaderContainer()  {
   </Container>
   );
 }; 
-export const burgerstate = openedburger;
+export const burgerstate = openedburger();
