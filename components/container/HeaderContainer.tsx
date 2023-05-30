@@ -45,7 +45,7 @@ export function HeaderContainer()  {
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
-    <>{Loading ? <>loading</> : (<>{!isLoggedIn && valued == false  ? (<GsButton onClick={signInUser} /> ) : (<>{isLoggedIn && valued == false ? <>revalidateUser boss </> : (<>{!isLoggedIn && valued == true ? <>second signin boss </> : (<>yes logged in</>)}</>)}</>)}</>)}</>
+    {Loading ? <>loading</> : (<>{!isLoggedIn && valued == false  ? (<GsButto onClick={signInUser} /> ) : (<>yes logged in</>)}</>)}
     <Burger opened={openedburger} onClick={toggled} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
       <Stack align="stretch" spacing="xs">
