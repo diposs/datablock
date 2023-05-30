@@ -5,7 +5,7 @@ import  useStyles  from '../style/container.style'
 import { HeadGroup } from '../inputs/HeaderGroup';
 import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
-import { useAuth, usePolybase, useIsAuthenticated, useDocument} from "@polybase/react";
+import { useAuth, usePolybase, useIsAuthenticated} from "@polybase/react";
 import { useBoundStore2 } from '../../stores/datastate'
 import useStore from '../../stores/hooks/useStore'
 
@@ -37,7 +37,7 @@ export function HeaderContainer()  {
         setValue('');
       }
     })
-  })
+  },[authState])
   return (
   <Container className={classes.inner} fluid>
     <HeadGroup/>
