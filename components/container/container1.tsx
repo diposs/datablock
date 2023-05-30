@@ -6,7 +6,7 @@ import useStore from '../../stores/hooks/useStore'
 
 export function SearchContainer() {
     const focusTrapRef = useFocusTrap();
-    const openedburgerchecker = useStore(useBoundStore,(state) => state.mobilemenucontrol);
+    const openedburgerchecker = useStore(useBoundStore2,(state) => state.mobilemenucontrol2);
     return (
         <Center ref={focusTrapRef} h={openedburgerchecker ? '60vh' : '97vh'}>
             <SearchBar/>
