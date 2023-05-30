@@ -13,7 +13,7 @@ export default createStyles ((theme) => ({
         },
       },
       controldd: {
-          borderRadius: '32px 32px 0px 0px!important',
+          borderRadius: '12px 12px 0px 0px!important',
       },
 })
 )
