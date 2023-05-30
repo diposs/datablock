@@ -1,7 +1,7 @@
 import { Center } from '@mantine/core';
 import { useFocusTrap } from '@mantine/hooks';
 import {SearchBar} from  '../inputs/searchbar';
-import { useBoundStore } from '../../stores/datastate'
+import { useBoundStore2 } from '../../stores/datastate'
 import useStore from '../../stores/hooks/useStore'
 
 export function SearchContainer() {
