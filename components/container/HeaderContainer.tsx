@@ -6,24 +6,15 @@ import { HeadGroup } from '../inputs/HeaderGroup';
 import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
 import { useAuth, usePolybase, useIsAuthenticated, useDocument} from "@polybase/react";
-import { useBoundStore } from '../../stores/datastate'
+import { useBoundStore2 } from '../../stores/datastate'
 import useStore from '../../stores/hooks/useStore'
-
-interface userss {
-  compileUser: boolean;
-  firstLogin: number;
-  latestLoginAction: string[];
-  publicKey : any;
-  searches: string[];
-
-}
 
 export function HeaderContainer()  {
   const { classes } = useStyles();
   const { auth } = useAuth();
   const [opened, { open, close }] = useDisclosure(false);
-  const openedburger = useStore(useBoundStore, (state) => state.mobilemenucontrol) || false;
-  const update = useBoundStore((state) => state.update);
+  const openedburger = useStore(useBoundStore2, (state) => state.mobilemenucontrol2) || false;
+  const update = useBoundStore2((state) => state.update);
   const toggled = (() => {update(!openedburger)})
   // const dipotest = useBoundStore((state) => state);
   // console.log(openedburger, 'openedburger');
@@ -34,10 +25,6 @@ export function HeaderContainer()  {
     .fill(0)
     .map((_, index) => <p key={index}>Drawer with scroll</p>);
   const polybase = usePolybase();
-  const { data, error, loading } =
-    useDocument<userss>(polybase.collection<userss>('User').record(value || ''));
-    console.log( data?.data, 'data');
-    console.log( error , 'error');
   const signInUser =  async() => {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
