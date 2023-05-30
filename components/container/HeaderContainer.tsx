@@ -40,7 +40,7 @@ export function HeaderContainer()  {
         updatepKey('nothing to see here');
       }
     })
-  },[])
+  })
   return (
   <Container className={classes.inner} fluid>
     <HeadGroup/>
