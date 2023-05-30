@@ -6,7 +6,7 @@ import { HeadGroup } from '../inputs/HeaderGroup';
 import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
 import { useAuth, usePolybase, useIsAuthenticated} from "@polybase/react";
-import { useBoundStore } from '../../stores/datastate'
+import { useBoundStore3, useBoundStore } from '../../stores/datastate'
 import useStore from '../../stores/hooks/useStore'
 
 export function HeaderContainer()  {
@@ -16,7 +16,10 @@ export function HeaderContainer()  {
   const openedburger = useBoundStore((state) => state.mobilemenucontrol);
   const update = useBoundStore((state) => state.update);
   const toggled = (() => {update(!openedburger)})
+  const { inUser, updateinUser, pKey, updatepKey } = useBoundStore3();
+  const valued = inUser
   const [value, setValue] = useState<string | null | undefined>('');
+  const [Loading, setLoading] = useState<boolean | null | undefined>(false);
   const [isLoggedIn] = useIsAuthenticated();
   const content = Array(12)
     .fill(0)
@@ -26,21 +29,24 @@ export function HeaderContainer()  {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
     };
+  const revalidateUser =  async() => {
+    const res = await auth.signIn();
+    let publicKey: any  = res!.publicKey;
+    };
   useEffect(() => {
     auth!.onAuthUpdate((authState) => {
       if (authState!) {
-        setValue(authState.publicKey);
-        console.log(authState!, 'dipotest');
+        updatepKey(authState.publicKey.toString());
       } else {
-        setValue('');
+        updatepKey('nothing to see here');
       }
     })
-  })
+  },[])
   return (
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
-    {isLoggedIn ? (<>{opened ? <>jj</> :<>dd</>}</>) : ( <GsButton onClick={signInUser} /> )}
+    {!Loading ? <>loading</> : ({!isLoggedIn && (valued==false)  ? (<GsButton onClick={signInUser} /> ) : ({isLoggedIn && (valued==false) ? <>revalidateUser boss </> : ({!isLoggedIn && (valued==true) ? <>second signin boss </> : (<>yes logged in</>)})})})}
     <Burger opened={openedburger} onClick={toggled} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
       <Stack align="stretch" spacing="xs">
