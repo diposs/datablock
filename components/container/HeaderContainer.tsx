@@ -43,10 +43,11 @@ export function HeaderContainer()  {
     })
   })
   return (
+    <>
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
-    {Loading ? <>loading</> : <>{isLoggedIn && valued == true  ? <GsButton onClick={signInUser} />  : <>yesin</>}</>}
+    {Loading ? (<>loading</>) : (<>{(isLoggedIn && valued == true)  ? <GsButton onClick={signInUser} />  : <>yesin</>})</>}
     <Burger opened={openedburger} onClick={toggled} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
       <Stack align="stretch" spacing="xs">
@@ -59,5 +60,6 @@ export function HeaderContainer()  {
       {content}
     </Drawer>
   </Container>
+      </>
   );
 }; 
