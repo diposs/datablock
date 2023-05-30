@@ -17,7 +17,8 @@ export function HeaderContainer()  {
   const update = useBoundStore((state) => state.update);
   const toggled = (() => {update(!openedburger)})
   const { inUser, updateinUser, pKey, updatepKey } = useBoundStore3();
-  const valued = inUser
+  const valued = inUser;
+  console.log(valued,'hdh');
   const [Loading, setLoading] = useState<boolean | null | undefined>(false);
   const [isLoggedIn] = useIsAuthenticated();
   const content = Array(12)
