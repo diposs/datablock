@@ -16,8 +16,6 @@ export function HeaderContainer()  {
   const openedburger = useBoundStore((state) => state.mobilemenucontrol);
   const update = useBoundStore((state) => state.update);
   const toggled = (() => {update(!openedburger)})
-  const dipotest = useBoundStore((state) => state);
-  console.log(dipotest.mobilemenucontrol, 'dipotest')
   const [value, setValue] = useState<string | null | undefined>('');
   const [isLoggedIn] = useIsAuthenticated();
   const content = Array(12)
@@ -30,6 +28,7 @@ export function HeaderContainer()  {
     };
   useEffect(() => {
     auth!.onAuthUpdate((authState) => {
+      console.log(authState | 'dud', 'dipotest');
       if (authState!) {
         setValue(authState.publicKey);
       } else {
