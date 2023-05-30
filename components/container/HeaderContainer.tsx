@@ -37,7 +37,7 @@ export function HeaderContainer()  {
         setValue('');
       }
     })
-  },[authState])
+  })
   return (
   <Container className={classes.inner} fluid>
     <HeadGroup/>
