@@ -28,7 +28,7 @@ export function HeaderContainer()  {
     };
   useEffect(() => {
     auth!.onAuthUpdate((authState) => {
-      console.log(authState | 'dud', 'dipotest');
+      console.log(authState! | 'dud', 'dipotest');
       if (authState!) {
         setValue(authState.publicKey);
       } else {
