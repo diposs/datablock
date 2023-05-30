@@ -35,7 +35,7 @@ export function HeaderContainer()  {
   useEffect(() => {
     auth!.onAuthUpdate((authState) => {
       if (authState!) {
-        updatepKey(authState.publicKey.toString());
+        updatepKey(authState.publicKey!.toString());
       } else {
         updatepKey('nothing to see here');
       }
