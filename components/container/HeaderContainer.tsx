@@ -18,7 +18,6 @@ export function HeaderContainer()  {
   const toggled = (() => {update(!openedburger)})
   const { inUser, updateinUser, pKey, updatepKey } = useBoundStore3();
   const valued = inUser
-  const [value, setValue] = useState<string | null | undefined>('');
   const [Loading, setLoading] = useState<boolean | null | undefined>(false);
   const [isLoggedIn] = useIsAuthenticated();
   const content = Array(12)
