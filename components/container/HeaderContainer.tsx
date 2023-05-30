@@ -7,6 +7,8 @@ import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
 import { useAuth, usePolybase, useIsAuthenticated, useDocument} from "@polybase/react";
 import { useStore } from '../../stores/datastate'
+import { useBoundStore } from '../../stores/datastate'
+import useStore from '../../stores/hooks/useStore'
 
 interface userss {
   compileUser: boolean;
@@ -21,11 +23,12 @@ export function HeaderContainer()  {
   const { classes } = useStyles();
   const { auth } = useAuth();
   const [opened, { open, close }] = useDisclosure(false);
-  const openedburger = useStore((store) => store.mobilemenucontrol);
-  const update = useStore((store) => store.update);
-  const toggled =(() => {
-    update(!openedburger)
-  })
+  const openedburger = useStore(useBoundStore, (state) => state.mobilemenucontrol) || false;
+  const update = useBoundStore((state) => state.update);
+  const toggled = (() => {update(!openedburger)})
+  // const dipotest = useBoundStore((state) => state);
+  // console.log(openedburger, 'openedburger');
+  // console.log(dipotest, 'dipotest')
   const [value, setValue] = useState<string | null | undefined>('');
   const [isLoggedIn] = useIsAuthenticated();
   const content = Array(12)
