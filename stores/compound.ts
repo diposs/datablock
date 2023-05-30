@@ -7,7 +7,7 @@ export interface StoreInterface3 {
   updatepKey: (inUser: string) => void
 }
 
-export const createcompound: StateCreator<StoreInterface2> = (set, get) => ({
+export const createcompound: StateCreator<StoreInterface3> = (set, get) => ({
     inUser: false,
     updateinUser: (inUser) => {set({inUser: inUser},)},
     pKey: null,
