@@ -6,7 +6,6 @@ import { HeadGroup } from '../inputs/HeaderGroup';
 import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
 import { useAuth, usePolybase, useIsAuthenticated, useDocument} from "@polybase/react";
-import { useStore } from '../../stores/datastate'
 import { useBoundStore } from '../../stores/datastate'
 import useStore from '../../stores/hooks/useStore'
 
