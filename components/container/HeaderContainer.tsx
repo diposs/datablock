@@ -5,34 +5,30 @@ import  useStyles  from '../style/container.style'
 import { HeadGroup } from '../inputs/HeaderGroup';
 import { MenuGroup } from '../inputs/MenuGroup';
 import { GsButton } from '../buttons/GSButton';
-import { useAuth, usePolybase, useIsAuthenticated } from "@polybase/react";
-import { useStore } from '../../stores/datastate'
+import { useAuth, usePolybase, useIsAuthenticated} from "@polybase/react";
+import { useBoundStore2 } from '../../stores/datastate'
+import useStore from '../../stores/hooks/useStore'
 
 export function HeaderContainer()  {
   const { classes } = useStyles();
   const { auth } = useAuth();
   const [opened, { open, close }] = useDisclosure(false);
-  const openedburger = useStore((store) => store.mobilemenucontrol);
-  const update = useStore((store) => store.update);
-  const toggled =(() => {
-    update(!openedburger)
-  })
+  const openedburger = useStore(useBoundStore2, (state) => state.mobilemenucontrol2) || false;
+  const update = useBoundStore2((state) => state.update);
+  const toggled = (() => {update(!openedburger)})
+  // const dipotest = useBoundStore((state) => state);
+  // console.log(openedburger, 'openedburger');
+  // console.log(dipotest, 'dipotest')
   const [value, setValue] = useState<string | null | undefined>('');
   const [isLoggedIn] = useIsAuthenticated();
-  const content = Array(100)
+  const content = Array(12)
     .fill(0)
     .map((_, index) => <p key={index}>Drawer with scroll</p>);
-  const polybase = usePolybase(); 
+  const polybase = usePolybase();
   const signInUser =  async() => {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
-      try {
-          const user = await polybase.collection('User').record(publicKey).get();
-      } catch (e) {
-        console.log(e);
-      }
-      open();
-    }
+    };
   useEffect(() => {
     auth!.onAuthUpdate((authState) => {
       if (authState!) {
@@ -46,7 +42,7 @@ export function HeaderContainer()  {
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
-    {isLoggedIn ? (<>{opened ? <>jj</> :<>{value}</>}</>) : ( <GsButton onClick={signInUser} /> )}
+    {isLoggedIn ? (<>{opened ? <>jj</> :<>dd</>}</>) : ( <GsButton onClick={signInUser} /> )}
     <Burger opened={openedburger} onClick={toggled} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
       <Stack align="stretch" spacing="xs">
@@ -55,7 +51,7 @@ export function HeaderContainer()  {
         <Button color="red" size="lg">Close</Button>
       </Stack>
     </Modal>
-    <Drawer opened={openedburger} onClose={toggled} className={classes.burgerCss} position="bottom" size='60vh' title="MENU" withCloseButton={false}>
+    <Drawer opened={openedburger} onClose={toggled} classNames={{root: classes.burgerCss, content: classes.controldd,}} position="bottom" size='60vh' title="  " withCloseButton={false}>
       {content}
     </Drawer>
   </Container>

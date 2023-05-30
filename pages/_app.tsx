@@ -4,7 +4,6 @@ import { MantineProvider, createEmotionCache } from '@mantine/core';
 import { PolybaseProvider,AuthProvider } from "@polybase/react";
 import { Polybase } from "@polybase/client";
 import { Auth } from "@polybase/auth";
-import StoreProvider from '@/stores/StoreProvider'
 import {FirstHeader} from '../components/header/header1';
 
 const polybase = new Polybase({defaultNamespace: process.env.NEXT_PUBLIC_USERNAME,}); 
@@ -34,10 +33,8 @@ export default function App({ Component, pageProps }: AppProps) {
      >
       <PolybaseProvider polybase={polybase}>
        <AuthProvider auth={auth!} polybase={polybase}>
-        <StoreProvider {...pageProps.initialZustandState}>
          <FirstHeader/>
          <Component {...pageProps} />
-        </StoreProvider>
        </AuthProvider>
       </PolybaseProvider>
      </MantineProvider>
