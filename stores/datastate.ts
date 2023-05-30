@@ -3,7 +3,8 @@ import { persist } from 'zustand/middleware'
 import { createmobilemenucontrolSlice, StoreInterface } from './mobilemenucontrolSlice'
 import { createmobilemenucontrolSlice2, StoreInterface2 } from './mobilemenucontrolSlice2'
 
-type StoreState = StoreInterface 
+type StoreState = StoreInterface
+type StoreState2 = StoreInterface2
 
 export const useBoundStore = create<StoreState>()(persist((...a) => ({
     ...createmobilemenucontrolSlice(...a),
