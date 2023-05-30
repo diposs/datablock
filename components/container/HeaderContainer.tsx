@@ -13,7 +13,7 @@ export function HeaderContainer()  {
   const { classes } = useStyles();
   const { auth } = useAuth();
   const [opened, { open, close }] = useDisclosure(false);
-  const openedburger = useStore(useBoundStore, (state) => state.mobilemenucontrol) || false;
+  const openedburger = useBoundStore, (state) => state.mobilemenucontrol);
   const update = useBoundStore((state) => state.update);
   const toggled = (() => {update(!openedburger)})
   const dipotest = useBoundStore((state) => state);
