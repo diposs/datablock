@@ -48,7 +48,7 @@ export function HeaderContainer()  {
     <HeadGroup/>
     <MenuGroup/>
     {Loading ? (<>loadihng</>) : (<>
-        {isLoggedIn && valued == false  ? (<GsButton onClick={signInUser} /> ) : (<>yesin</>)
+        {!isLoggedIn ? (<GsButton onClick={signInUser} /> ) : (<>yesin</>)
         }</>)}
     <Burger opened={openedburger} onClick={toggled} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
