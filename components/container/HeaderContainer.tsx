@@ -30,7 +30,7 @@ export function HeaderContainer()  {
     auth!.onAuthUpdate((authState) => {
       if (authState!) {
         setValue(authState.publicKey);
-        console.log(authState<any | null | undefined>, 'dipotest');
+        console.log(authState!, 'dipotest');
       } else {
         setValue('');
       }
