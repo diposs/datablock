@@ -35,7 +35,7 @@ export function HeaderContainer()  {
         updatepKey(authState.publicKey!.toString());
       }
     })
-  },[auth])
+  },[auth,updatepKey])
   return (
     <>
   <Container className={classes.inner} fluid>
