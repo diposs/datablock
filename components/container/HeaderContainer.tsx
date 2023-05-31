@@ -18,8 +18,7 @@ export function HeaderContainer()  {
   const toggled = (() => {update(!openedburger)})
   const { inUser, updateinUser, pKey, updatepKey } = useBoundStore3();
   const valued = inUser;
-  console.log(valued,'hdh');
-  const [Loading, setLoading] = useState<boolean | null | undefined>(false);
+  const [Loading, setLoading] = useState<boolean>(false);
   const [isLoggedIn] = useIsAuthenticated();
   const content = Array(12)
     .fill(0)
@@ -29,25 +28,20 @@ export function HeaderContainer()  {
     const res = await auth.signIn();
     let publicKey: any  = res!.publicKey;
     };
-  const revalidateUser =  async() => {
-    const res = await auth.signIn();
-    let publicKey: any  = res!.publicKey;
-    };
   useEffect(() => {
     auth!.onAuthUpdate((authState) => {
       if (authState!) {
+        console.log('bhdbhsd');
         updatepKey(authState.publicKey!.toString());
-      } else {
-        updatepKey('nothing to see here');
       }
     })
-  })
+  },[auth])
   return (
     <>
   <Container className={classes.inner} fluid>
     <HeadGroup/>
     <MenuGroup/>
-    {Loading ? (<>loadihng</>) : (!isLoggedIn ? (<GsButton onClick={signInUser} /> ) : (<>yesin</>))}
+    {Loading ? <>loading</> : (<>{isLoggedIn ? (<>gvgvg</>) : (<GsButton onClick={signInUser} />)}</>)}
     <Burger opened={openedburger} onClick={toggled} className={classes.burgerCss} />
     <Modal opened={opened} onClose={close} size="auto" centered withCloseButton={false} closeOnClickOutside={false}>
       <Stack align="stretch" spacing="xs">
