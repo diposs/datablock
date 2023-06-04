@@ -8,7 +8,7 @@ export function SearchContainer() {
     const focusTrapRef = useFocusTrap();
     const openedburgerchecker = useStore(useBoundStore,(state) => state.mobilemenucontrol);
     return (
-        <Center ref={focusTrapRef} h={openedburgerchecker ? '46vh' : '97vh'}>
+        <Center ref={focusTrapRef} h={openedburgerchecker ? '46dvh' : '97dvh'}>
             <SearchBar/>
         </Center>
     );
