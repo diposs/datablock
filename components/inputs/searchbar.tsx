@@ -17,7 +17,7 @@ export function SearchBar() {
     <Input
       icon={< IconSearch size="2.125rem" />}
       rightSection={< Searchiconright type="submit" /> }
-      miw="60vw"
+      miw="60dvw"
       data-autofocus
       placeholder="Search"
       variant="filled"
