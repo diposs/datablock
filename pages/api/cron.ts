@@ -27,14 +27,20 @@ export default async function handler(
     sig: ethPersonalSign(wallet.privateKey, data)
   }
 });
- const data6 = await db.collection('Chaintrack').record('ETH').get()
+ 
+  let we =  0;
+  while(wed <= 20000){
+    try{
+      const data6 = await db.collection('Chaintrack').record('ETH').get()
   let we2 = data6.data.blockNumber[0];
-  let we = we2 + 1;
-  while(we <= 20000){
+      let we = we2 + 1;
   const dsd = await provider.getBlock(we);
   const doinge = {'parentHash':dsd.parentHash, 'hash': dsd.hash, 'numbers':dsd.number, 'timestamp':dsd.timestamp};
   const daada = JSON.stringify(doinge);
   const data7 = await db.collection('IndexBlock').create([db.collection('LevelnMembership').record('Membership'),db.collection('Chaintrack').record('ETH'),db.collection('CompilerUser').record(dpkey),db.collection('AvailableJobs').record('Jobs'),daada]);
+    }catch (e: any) {
+      console.log(e);
+    }
   we += 1;
     };
   res.status(200).json({ name: 'John Doe' });
