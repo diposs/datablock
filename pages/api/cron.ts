@@ -16,7 +16,7 @@ export default async function handler(
   const wallet:any = await new ethers!.Wallet(trydipo!);
   const dood = wallet.publicKey;
   const dpkey = '0x' + dood.slice(4);
-  var url = 'https://ethereum.publicnode.com/';
+  var url = 'https://rpc.ankr.com/eth';
   var provider = await new ethers.providers.JsonRpcProvider(url);
   const db = await new Polybase({
   defaultNamespace: "pk/0x89de820323237a0e6cab8c5f29dfbf2f026f8c1da20c01f5b06b31877252a9d0f493bf95b625b667b1bdb3fb1593553bda1f056220cb2aa0e680316dba8b9a2c/DataBlockV2.1",
