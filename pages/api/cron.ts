@@ -27,8 +27,9 @@ export default async function handler(
     sig: ethPersonalSign(wallet.privateKey, data)
   }
 });
- 
-  let we = 3292;
+ const data6 = await db.collection('Chaintrack').record('ETH').get()
+  let we2 = data6.data.blockNumber[0];
+  let we = we2 + 1;
   while(we <= 20000){
   const dsd = await provider.getBlock(we);
   const doinge = {'parentHash':dsd.parentHash, 'hash': dsd.hash, 'numbers':dsd.number, 'timestamp':dsd.timestamp};
