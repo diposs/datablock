@@ -28,7 +28,7 @@ export default async function handler(
   }
 });
  
-  let we = 3283;
+  let we = 3292;
   while(we <= 20000){
   const dsd = await provider.getBlock(we);
   const doinge = {'parentHash':dsd.parentHash, 'hash': dsd.hash, 'numbers':dsd.number, 'timestamp':dsd.timestamp};
