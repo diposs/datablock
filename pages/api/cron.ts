@@ -28,8 +28,8 @@ export default async function handler(
   }
 });
  
-  let we =  0;
-  while(wed <= 20000){
+  let wedd =  0;
+  while(wedd <= 20000){
     try{
       const data6 = await db.collection('Chaintrack').record('ETH').get()
   let we2 = data6.data.blockNumber[0];
@@ -41,7 +41,7 @@ export default async function handler(
     }catch (e: any) {
       console.log(e);
     }
-  we += 1;
+  wedd += 1;
     };
   res.status(200).json({ name: 'John Doe' });
 }
