@@ -22,16 +22,16 @@ export default async function handler(
   db.signer((data) => {
   return {
     h: 'eth-personal-sign',
-    sig: ethPersonalSign(wallet.privateKey, data)
+    sig: ethPersonalSign(trydipo, data)
   }
 });
  
   let wedd =  0;
-  while(wedd <= 20000){
-    try{
-      const data6 = await db.collection('Chaintrack').record('ETH').get()
+  const data6 = await db.collection('Chaintrack').record('ETH').get()
   let we2 = data6.data.blockNumber[0];
       let we = we2 + 1;
+  while(wedd <= 20000){
+    try{
   const dsd = await provider.getBlock(we);
   const doinge = {'parentHash':dsd.parentHash, 'hash': dsd.hash, 'numbers':dsd.number, 'timestamp':dsd.timestamp};
   const daada = JSON.stringify(doinge);
@@ -39,6 +39,7 @@ export default async function handler(
     }catch (e: any) {
       console.log(e);
     }
+    we += 1;
   wedd += 1;
     };
   res.status(200).json({ name: 'John Doe' });
