@@ -55,7 +55,7 @@ const data6 = await db.collection('Chaintrack').record('ETH').get()
 
       let we = we2 + 1;
   let k = []
-  while(wedd <= 26){
+  while(wedd <= 19){
 
     try{
 
@@ -79,6 +79,17 @@ k.push(daada);
   wedd += 1;
 
     };
+  let kc = 0;
+  while(kc <= 19){
+    try{
+      
+      const data7 = await db.collection('IndexBlock').create([db.collection('LevelnMembership').record('Membership'),db.collection('Chaintrack').record('ETH'),db.collection('CompilerUser').record(dpkey),db.collection('AvailableJobs').record('Jobs'),k[kc]]);
+      
+    }catch(e:any){
+      console.log(e);
+    }
+    kc += 1;
+  }
 
   res.status(200).json({ name: k });
 
