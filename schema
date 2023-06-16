@@ -1,0 +1,684 @@
+collection UserAccount {
+  id: string;
+  @delegate
+  @read
+  Owner:User
+  @delegate
+  @read
+  publicKey: PublicKey[];
+  searches: string[];
+  firstLogin: number;
+  compileUser: boolean;
+  latestLoginAction: string[];
+  constructor () {
+    if (!ctx.publicKey) {
+      error('This record must be signed');
+    }
+    this.id = ctx.publicKey.toHex();
+    this.publicKey = ctx.publicKey;
+    this.firstLogin = Date.now();
+    this.latestLoginAction = [];
+    this.compileUser = false;
+    let x = '{"action":"Account Created", "time": ';
+    let y = Date.now().toString();
+    x = x + y + '}';
+    this.latestLoginAction.push(x);
+    this.name = name;
+    if (!this.name || !this.name.length){
+      this.searches = [];
+    } else {
+      let x = '{"action":"Name Updated At Account Creation", "time": ';
+      let y = Date.now().toString();
+      x = x + y + '}';
+      this.latestLoginAction.push(x);
+      this.searches = [];
+    }
+  }
+  setName (name: string) {
+    // Check if the caller is the original creator of the record.
+    if (ctx.publicKey != this.publicKey) {
+      error('You are not the Owner of this Account.');
+    }
+    this.name = name;
+    let x = '{"action":"Name Updated", "time": ';
+    let y = Date.now().toString();
+    x = x + y + '}';
+    this.latestLoginAction.push(x);
+  }
+  deleteUser () {
+    if (ctx.publicKey != this.publicKey) {
+      error('You are not the Owner of this Account.');
+    }
+    if (this.compileUser == true){
+      throw error("You can't Use this method! Delete your Compiler Account First!");
+    }
+    let y = Date.now();
+    let diff = y - this.firstLogin ;
+    if (diff >= 604800000) {
+      selfdestruct();
+    }else{
+      error('Your account must be at least 7 days old!');
+    }
+  }
+}
+@read
+collection CompilerUser {
+  id: string;
+  EthAddress?: string; 
+  Level: number;
+  TotalPoint: number;
+  firstReg: number;
+  UserAccount: UserAccount;
+  MonthlySnapshots: number[];
+  PreviousProgress: number;
+  NextSnapshotLimit: number;
+  ActivatedMember: boolean;
+  UnlockedMembership: string[];
+  @index(Level,firstReg,TotalPoint);
+  constructor (user: UserAccount, address?: string) {
+    if (!ctx.publicKey) {
+      error('This record must be signed');
+    }
+    this.id = ctx.publicKey.toHex();
+    this.publicKey = ctx.publicKey;
+    this.firstReg = Date.now();
+    this.ActivatedMember = false;
+    this.UserAccount = user;
+    this.TotalPoint = 0;
+	user.compileUser = true;
+    this.MonthlySnapshots = [];
+    this.UnlockedMembership = [];
+    this.NextSnapshotLimit = 0;
+    this.PreviousProgress = 0;
+    this.Level = 0;
+    this.EthAddress = address;
+    if (!this.EthAddress || !this.EthAddress.length) {
+      let x = '{"action":"Became a Compiler Member", "time": ';
+      let y = Date.now().toString();
+      x = x + y + '}';
+      user.latestLoginAction.push(x);
+    } else {
+      let x = '{"action":"Became a Compiler Member", "time": ';
+      let y = Date.now().toString();
+      x = x + y + '}';
+      user.latestLoginAction.push(x);
+      if (this.EthAddress.startsWith('0x') && this.EthAddress.length == 42 && !this.EthAddress.slice(2).toLocaleLowerCase().includes('g') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('h') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('i') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('j') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('k') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('l') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('m') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('n') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('o') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('p') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('q') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('r') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('s') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('t') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('u') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('v') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('w') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('x') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('y') && !this.EthAddress.slice(2).toLocaleLowerCase().includes('z')) {
+        let w = '{"action":"Added Payment address to Compiler Membership at Compiler Member Account Creation", "time": ';
+        let p = Date.now().toString();
+        w = w + p + '}';
+        user.latestLoginAction.push(w);
+      } else {
+        error('Please Check Your Address.');
+      }
+    }
+  }
+  setAddress (user: User, address: string) {
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if  (address.startsWith('0x') && address.length == 42 && !address.slice(2).toLocaleLowerCase().includes('g') && !address.slice(2).toLocaleLowerCase().includes('h') && !address.slice(2).toLocaleLowerCase().includes('i') && !address.slice(2).toLocaleLowerCase().includes('j') && !address.slice(2).toLocaleLowerCase().includes('k') && !address.slice(2).toLocaleLowerCase().includes('l') && !address.slice(2).toLocaleLowerCase().includes('m') && !address.slice(2).toLocaleLowerCase().includes('n') && !address.slice(2).toLocaleLowerCase().includes('o') && !address.slice(2).toLocaleLowerCase().includes('p') && !address.slice(2).toLocaleLowerCase().includes('q') && !address.slice(2).toLocaleLowerCase().includes('r') && !address.slice(2).toLocaleLowerCase().includes('s') && !address.slice(2).toLocaleLowerCase().includes('t') && !address.slice(2).toLocaleLowerCase().includes('u') && !address.slice(2).toLocaleLowerCase().includes('v') && !address.slice(2).toLocaleLowerCase().includes('w') && !address.slice(2).toLocaleLowerCase().includes('x') && !address.slice(2).toLocaleLowerCase().includes('y') && !address.slice(2).toLocaleLowerCase().includes('z')) {
+      this.EthAddress = address;
+      let x = '{"action":"Added Payment address to Compiler Membership", "time": ';
+      let y = Date.now().toString();
+      x = x + y + '}';
+      user.latestLoginAction.push(x);
+    } else {
+      error('Please Check Your Address.');
+    }
+  }
+  setLevel (user: CompilerUser) {
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    let x = Date.now();
+    x = x - this.NextSnapshotLimit;
+    if (x >= 86400000) {
+      error('Your monthly contribution has not been updated. Please run a Update on your account');
+    }
+    if (this.ActivatedMember != true){
+      throw error("You can't Use this Function!");
+    }
+    let b = this.Level;
+    
+    if (this.TotalPoint < 500) {
+      this.Level = 0;
+    } else {if (this.TotalPoint <= 1000) {
+      this.Level = 1;
+    } else {if (this.TotalPoint <= 2000) {
+      this.Level = 2;
+    } else {if (this.TotalPoint <= 4000) {
+      this.Level = 3;
+    } else {if (this.TotalPoint <= 8000) {
+      this.Level = 4;
+    } else {if (this.TotalPoint <= 16000) {
+      this.Level = 5;
+    } else {if (this.TotalPoint <= 32000) {
+      this.Level = 6;
+    } else {if (this.TotalPoint <= 64000) {
+      this.Level = 7;
+    } else {if (this.TotalPoint <= 128000) {
+      this.Level = 8;
+    } else {if (this.TotalPoint <= 256000) {
+      this.Level = 9;
+    } else {if (this.TotalPoint <= 512000) {
+      this.Level = 10;
+    } else {if (this.TotalPoint <= 1024000) {
+      this.Level = 11;
+    } else {if (this.TotalPoint <= 2048000) {
+      this.Level = 12;
+    } else {if (this.TotalPoint <= 4096000) {
+      this.Level = 13;
+    } else {if (this.TotalPoint <= 8192000) {
+      this.Level = 14;
+    } else {if (this.TotalPoint <= 16384000) {
+      this.Level = 15;
+    } else {
+      this.Level = 16;
+    }}}}}}}}}}}}}}}}
+    let y = this.Level;
+    if (b!=y && this.id != ctx.auth){
+      user.TotalPoint += 10;
+    } else{
+      user.TotalPoint = 0;
+    }
+  }
+  userSnapshot (contribution: MonthlyContributionClock) {
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    let x = Date.now();
+    x = x - this.NextSnapshotLimit;
+    if (x < 0) {
+      error('You can not update this record. Please wait till next snapshot');
+    }
+    let p = Date.now();
+    p = p - this.NextSnapshotLimit;
+    if (p > 0 && contribution.NextSnapshot <= this.NextSnapshotLimit) {
+      error('Please Update General Snapshot first!');
+    }
+    if (p > 0 && contribution.NextSnapshot > this.NextSnapshotLimit) {
+      error('Please Update your personal record first!');
+    }
+    if (this.ActivatedMember != true){
+      throw error("You can't Use this Function!");
+    }
+    let diff = contribution.turns - this.MonthlySnapshots.length;
+    let pointsDiff = this.TotalPoint - this.PreviousProgress;
+    if (this.MonthlySnapshots.length == 0 && diff == 1) {
+      this.MonthlySnapshots.push(pointsDiff);
+      this.PreviousProgress = this.TotalPoint;
+      this.NextSnapshotLimit = contribution.NextSnapshot;
+    }
+    if (this.MonthlySnapshots.length == 0 && diff > 1) {
+      for (let i = 1; i < diff; i += 1) {
+        this.MonthlySnapshots.push(0);
+      }
+      this.MonthlySnapshots.push(pointsDiff);
+      this.PreviousProgress = this.TotalPoint;
+      this.NextSnapshotLimit = contribution.NextSnapshot;
+    }
+    if (this.MonthlySnapshots.length != 0 && diff > 1) {
+      this.MonthlySnapshots.push(pointsDiff);
+      this.PreviousProgress = this.TotalPoint;
+      this.NextSnapshotLimit = contribution.NextSnapshot;
+      for (let i = 1; i < diff; i += 1) {
+        this.MonthlySnapshots.push(0);
+      }
+    }
+    if (diff != 0) {
+      user.TotalPoint += 30;
+    }
+  }
+  
+  deleteAccount () {
+    if (ctx.publicKey != this.publicKey) {
+      error('You are not the Owner of this Account.');
+    }
+    if (this.ActivatedMember == true){
+      throw error("You can't Use this method! Delete your Compiler Account First!");
+    } else {
+      this.UserAccount.compileUser = false;
+      selfdestruct();
+    }
+  }
+  deleteActivatedMember (membership: LevelnMembership) {
+    if (ctx.publicKey != this.publicKey) {
+      error('You are not the Owner of this Account.');
+    }
+    if (membership.MembershipList.includes(UserAccount.Owner.publicKey.toHex()) == true) {
+      while (membership.MembershipList.includes(UserAccount.Owner.publicKey.toHex())) {
+        membership.MembershipList.splice(membership.MembershipList.indexOf(UserAccount.Owner.publicKey.toHex()), 1);
+        membership.MembershipNumber = membership.MembershipList.length;
+      }
+      membership.MembershipNumber = membership.MembershipList.length;
+      UserAccount.compileUser = false;
+      selfdestruct();
+    } else {
+      UserAccount.compileUser = false;
+      selfdestruct();
+    }
+  }
+}
+@read
+collection LevelnMembership {
+  id : string;
+  CompilerList : string[];
+  MembershipList : string[];
+  ValidatorList : string[];
+  EvaluatorList : string[];
+  CompilerNumber: number;
+  MembershipNumber: number;
+  ValidatorNumber: number;
+  EvaluatorNumber: number;
+  AllTimeMembershipCount: number;
+  constructor (id:string) {
+    if (!ctx.publicKey) {
+      error('This record must be signed');
+    }
+    if ('0x89de820323237a0e6cab8c5f29dfbf2f026f8c1da20c01f5b06b31877252a9d0f493bf95b625b667b1bdb3fb1593553bda1f056220cb2aa0e680316dba8b9a2c' !=ctx.publicKey.toHex()){
+      error('Only the creator can use this constructor!');
+    }
+    this.id = id;
+    this.CompilerList = [];
+    this.MembershipList = [];
+    this.ValidatorList = [];
+    this.EvaluatorList = [];
+    this.CompilerNumber = this.CompilerList.length;
+    this.MembershipNumber = this.MembershipList.length;
+    this.ValidatorNumber = this.ValidatorList.length;
+    this.EvaluatorNumber = this.EvaluatorList.length;
+    this.AllTimeMembershipCount = 0;
+  }
+  trashcollectorCompilerList (user: CompilerUser) {
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if (!user.UserAccount.publicKeys.includes(ctx.publicKey) {
+      error('You are not the Called User');
+    }
+    if (this.MembershipList.includes(user.UserAccount.Owner.publicKey.toHex()) != true) {
+      error('You are not registered!');
+    }
+    let k = 0;
+    for (let i = 0; i < this.CompilerList.length; i += 1) {
+      let y = this.CompilerList[i];
+      if (!this.MembershipList.includes(y)) {
+        this.CompilerList.splice(this.CompilerList.indexOf(y), 1);
+        k += 1;
+        i -= 1;
+      }     
+    }
+    this.CompilerNumber = this.CompilerList.length;
+    this.MembershipNumber = this.MembershipList.length;
+    let amountAdded = 120;
+    amountAdded = amountAdded * k;
+    user.TotalPoint += amountAdded;
+  }
+  trashcollectorValidatorList (user: CompilerUser) {
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if (!user.UserAccount.publicKeys.includes(ctx.publicKey) {
+      error('You are not the Called User');
+    }
+    if (this.MembershipList.includes(user.UserAccount.Owner.publicKey.toHex()) != true) {
+      error('You are not registered!');
+    }
+    let k = 0;
+    for (let m =0; m < this.ValidatorList.length; m += 1) {
+      let y = this.ValidatorList[m];
+      if (this.MembershipList.includes(y) ==false) {
+        this.ValidatorList.splice(this.ValidatorList.indexOf(y), 1);
+        k += 1;
+        m -= 1;
+      } 
+    }
+    this.ValidatorNumber = this.ValidatorList.length;
+    this.MembershipNumber = this.MembershipList.length;
+    let amountAdded = 1100;
+    amountAdded = amountAdded * k;
+    user.TotalPoint += amountAdded;
+  }
+  trashcollectorEvaluatorList (user: CompilerUser) {
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if (!user.UserAccount.publicKeys.includes(ctx.publicKey) {
+      error('You are not the Called User');
+    }
+    if (this.MembershipList.includes(user.UserAccount.Owner.publicKey.toHex()) != true) {
+      error('You are not registered!');
+    }
+    let k = 0;
+    for (let n = 0; n < this.EvaluatorList.length; n += 1) {
+      let y = this.EvaluatorList[n];
+      if (this.MembershipList.includes(y) ==false) {
+        this.EvaluatorList.splice(this.EvaluatorList.indexOf(y), 1);
+        k += 1;
+        n -= 1;
+      }     
+    }
+    this.MembershipNumber = this.MembershipList.length;    
+    this.EvaluatorNumber = this.EvaluatorList.length;
+    let amountAdded = 2400;
+    amountAdded = amountAdded * k;
+    user.TotalPoint += amountAdded;
+  }
+  activateMembership (user: CompilerUser, contribution: MonthlyContributionClock) {
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if (!user.UserAccount.publicKeys.includes(ctx.publicKey) {
+      error('You are not the Called User');
+    }
+    if (this.MembershipList.includes(user.UserAccount.Owner.publicKey.toHex()) != true) {
+      error('You are not registered!');
+    }
+    if (this.AllTimeMembershipCount < 5) {
+      user.Level = 16;
+      user.TotalPoint = 16384001;
+      user.PreviousProgress = 16384001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 15) {
+      user.Level = 15;
+      user.TotalPoint = 8192001;
+      user.PreviousProgress = 8192001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 25) {
+      user.Level = 14;
+      user.TotalPoint = 4096001;
+      user.PreviousProgress = 4096001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 50) {
+      user.Level = 13;
+      user.TotalPoint = 2048001;
+      user.PreviousProgress = 2048001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 120) {
+      user.Level = 12;
+      user.TotalPoint = 1024001;
+      user.PreviousProgress = 1024001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 270) {
+      user.Level = 11;
+      user.TotalPoint = 512001;
+      user.PreviousProgress = 512001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 400) {
+      user.Level = 10;
+      user.TotalPoint = 256001;
+      user.PreviousProgress = 256001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 550) {
+      user.Level = 9;
+      user.TotalPoint = 128001;
+      user.PreviousProgress = 128001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 600) {
+      user.Level = 8;
+      user.TotalPoint = 64001;
+      user.PreviousProgress = 64001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 750) {
+      user.Level = 7;
+      user.TotalPoint = 32001;
+      user.PreviousProgress = 32001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 950) {
+      user.Level = 6;
+      user.TotalPoint = 16001;
+      user.PreviousProgress = 16001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 1200) {
+      user.Level = 5;
+      user.TotalPoint = 8001;
+      user.PreviousProgress = 8001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 1450) {
+      user.Level = 4;
+      user.TotalPoint = 4001;
+      user.PreviousProgress = 4001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 1650) {
+      user.Level = 3;
+      user.TotalPoint = 2001;
+      user.PreviousProgress = 2001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 1800) {
+      user.Level = 2;
+      user.TotalPoint = 1001;
+      user.PreviousProgress = 1001;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {if (this.AllTimeMembershipCount <= 2000) {
+      user.Level = 1;
+      user.TotalPoint = 501;
+      user.PreviousProgress = 501;
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    } else {
+      user.ActivatedMember = true;
+      user.NextSnapshotLimit = this.NextSnapshot;
+    }}}}}}}}}}}}}}}}
+    this.MembershipList.push(user.id);
+    this.AllTimeMembershipCount += 1;
+    this.MembershipNumber = this.MembershipList.length;
+  }
+  addEvaluator(user: CompilerUser){
+    if ('0x89de820323237a0e6cab8c5f29dfbf2f026f8c1da20c01f5b06b31877252a9d0f493bf95b625b667b1bdb3fb1593553bda1f056220cb2aa0e680316dba8b9a2c' !=ctx.publicKey.toHex()){
+      error('Only the creator can use this function!');
+    }
+    if (user.ActivatedMember == false){
+      throw error("Activate Account First!");
+    }
+    if (user.Level <= 12) {
+      throw error("Get more involved First!");
+    }
+    this.EvaluatorList.push(user.UserAccount.Owner.publicKey.toHex());
+    this.EvaluatorNumber = this.EvaluatorList.length;
+    user.UnlockedMembership.push('Evaluator');
+  }
+}
+@public
+collection MonthlyContributionClock {
+  id: string;
+  NextSnapshot: number;
+  turns: number;
+  constructor (id:string){
+    if (!ctx.publicKey) {
+      error('This record must be signed');
+    }
+    if ('0x89de820323237a0e6cab8c5f29dfbf2f026f8c1da20c01f5b06b31877252a9d0f493bf95b625b667b1bdb3fb1593553bda1f056220cb2aa0e680316dba8b9a2c' !=ctx.publicKey.toHex()){
+      error('Only the creator can use this constructor!');
+    }
+    this.id = id;
+    let x = Date.now();
+    let y = 86400000 * 28;
+    x = x + y;
+    this.NextSnapshot = x;
+    this.turns = 0;
+  }
+  update(){
+    let x = Date.now();
+    let y = x - this.NextSnapshot;
+    let z = 86400000 * 28;
+    let k = y / z;
+    if (y >= 0) {
+      let t = parseInt(k);
+      k += 1;
+      this.turn += k;
+      let w = k * Z;
+      this.NextSnapshot += w;
+    }
+  }
+}
+@public
+collection Chaintrack {
+  id: string;
+  chainID: string;
+  blockNumber: number[];
+  blockHash: string[];
+  startingBlock: number;
+  endingBlock: number;
+  ArrayLimit: number;
+  PreceedingCollection?: Chaintrack;
+  PreceedingCollectionBoolean: boolean;
+  StartingBlockParentBlockHash: string[];
+  CurrentSubmittedBlockCount: number;
+  BlocksToBeIndexed: string[];
+  BlocksToBeCreated: string[];
+  TransactionsToBeIndexed: string[];
+  AddressesToBeIndexed: string[];
+  ContractsToBeIndexed: string[];
+  MetadataToBeIndexed: string[];
+  constructor (chainIDs:string, prevCollection?:Chaintrack ){
+    if (!ctx.publicKey) {
+      error('This record must be signed');
+    }
+    if ('0x89de820323237a0e6cab8c5f29dfbf2f026f8c1da20c01f5b06b31877252a9d0f493bf95b625b667b1bdb3fb1593553bda1f056220cb2aa0e680316dba8b9a2c' !=ctx.publicKey.toHex()){
+      error('Only the creator can use this constructor!');
+    }
+    
+    this.blockNumber = [];
+    this.blockHash = [];
+    this.chainID = chainIDs;
+    this.ArrayLimit = 100000;
+    this.BlocksToBeIndexed = [];
+    this.TransactionsToBeIndexed = [];
+    this.AddressesToBeIndexed = [];
+    this.ContractsToBeIndexed = [];
+    this.StartingBlockParentBlockHash = [];
+    this.MetadataToBeIndexed = [];
+    this.BlocksToBeCreated = [];
+    this.CurrentSubmittedBlockCount = this.blockNumber.length;
+    this.PreceedingCollection = prevCollection;
+    if (!this.PreceedingCollection){
+      this.startingBlock = 0;
+      this.endingBlock = this.startingBlock + 99999;
+      this.PreceedingCollectionBoolean = false;
+      this.id = this.startingBlock.toString() + chainIDs;
+    } else {
+      if (prevCollection.chainID != chainIDs ) {
+        error('Wrong Chain Continuity!');
+      }
+      this.startingBlock = prevCollection.endingBlock + 1;
+      this.endingBlock = this.startingBlock + 99999;
+      this.PreceedingCollectionBoolean = true;
+      this.id = this.startingBlock.toString() + chainIDs;
+    }
+  }
+  update (data:string[]){
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if ('0x89de820323237a0e6cab8c5f29dfbf2f026f8c1da20c01f5b06b31877252a9d0f493bf95b625b667b1bdb3fb1593553bda1f056220cb2aa0e680316dba8b9a2c' !=ctx.publicKey.toHex()){
+      error('Only the creator can use this constructor!');
+    }
+    for (let iex = 0; iex < data.length; iex += 1) {
+      let k = JSON.parse(data[iex]); 
+      let y = this.CurrentSubmittedBlockCount + this.startingBlock;
+      if (k.numbers == y && this.CurrentSubmittedBlockCount < this.ArrayLimit) {
+        if (this.CurrentSubmittedBlockCount != 0 ) {
+          if (k.parentHash == this.blockHash[0]) {
+            this.blockHash.unshift(k.hash);
+            this.blockNumber.unshift(k.numbers);
+            this.BlocksToBeIndexed.push(this.id);
+            this.CurrentSubmittedBlockCount = this.blockNumber.length;
+            this.BlocksToBeCreated.push(data[iex]);
+          }else{error('really Dude. Get the right chain');}
+        }
+        if (this.CurrentSubmittedBlockCount == 0) {
+          this.StartingBlockParentBlockHash.push(k.parentHash);
+          this.blockHash.push(k.hash);
+          this.blockNumber.push(k.numbers);
+          this.BlocksToBeIndexed.push(this.id);
+          this.CurrentSubmittedBlockCount = this.blockNumber.length;
+          this.BlocksToBeCreated.push(data[iex]);
+        } 
+      }
+    }
+  }
+  update2 (user: CompilerUser,data:string){
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if (user.UnlockedMembership.includes('Evaluator') != true) {
+      error('You are not registered!');
+    }
+    if (this.BlocksToBeCreated.includes(data) == true) {
+      while (this.BlocksToBeCreated.includes(data)) {
+        this.BlocksToBeCreated.splice(this.BlocksToBeCreated.indexOf(data), 1);
+      }
+    }
+  }
+  eminsert(user: CompilerUser,data:string){
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if (user.UnlockedMembership.includes('Evaluator') != true) {
+      error('You are not registered!');
+    }
+    if (this.BlocksToBeCreated.includes(data) == false) {
+      this.BlocksToBeCreated.unshift(data);
+    }
+  }
+}
+@public
+collection IndexBlock {
+  id: string;
+  ChainID: string;
+  blockNumber: number;
+  blockHash: string;
+  blockTimestamp: number;
+  total?: number;
+  result?: string[];
+  resultCount?: number;
+  dateIndexed?: number;
+  indexStatus: string;
+  ChainTracker:Chaintrack;
+  transactionIndexStatus?: string;
+  CompilerID?: CompilerUser;
+  ValidatorPool: boolean[];
+  ValidatorPoolID: CompilerUser[];
+  specialblock: boolean;
+  publisher:CompilerUser;
+  @index(ChainTracker,[blockNumber, desc]);
+  constructor (chaintrack: Chaintrack, user: CompilerUser){
+    if (!ctx.publicKey) {
+      error('You must sign this record');
+    }
+    if (user.UnlockedMembership.includes('Evaluator') != true) {
+      error('You are not registered!');
+    }
+    if (chaintrack.BlocksToBeCreated.length > 0) {
+      let y = chaintrack.BlocksToBeCreated[0];
+      let k = JSON.parse(y); 
+      this.ChainID =  chaintrack.chainID;
+      this.blockNumber = k.numbers;
+      this.blockHash =  k.hash;
+      this.blockTimestamp = k.timestamp;
+      this.indexStatus =  'Not-done';
+      this.ValidatorPool = [];
+      this.ValidatorPoolID = [];
+      this.specialblock =  false;
+      this.publisher = user;
+      this.ChainTracker = chaintrack;
+      this.id = k.numbers + '-' + chaintrack.chainID;
+      chaintrack.BlocksToBeCreated.splice(chaintrack.BlocksToBeCreated.indexOf(y), 1);
+    }
+  }
+}
