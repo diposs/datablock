@@ -65,32 +65,23 @@ collection UserAccount {
 collection CompilerUser {
   id: string;
   EthAddress?: string; 
-  Level: number;
-  TotalPoint: number;
+  
   firstReg: number;
   UserAccount: UserAccount;
-  MonthlySnapshots: number[];
-  PreviousProgress: number;
-  NextSnapshotLimit: number;
-  ActivatedMember: boolean;
-  UnlockedMembership: string[];
-  @index(Level,firstReg,TotalPoint);
+  
+  @index(firstReg);
   constructor (user: UserAccount, address?: string) {
     if (!ctx.publicKey) {
       error('This record must be signed');
     }
     this.id = ctx.publicKey.toHex();
-    this.publicKey = ctx.publicKey;
+    
     this.firstReg = Date.now();
-    this.ActivatedMember = false;
+    
     this.UserAccount = user;
-    this.TotalPoint = 0;
+    
 	user.compileUser = true;
-    this.MonthlySnapshots = [];
-    this.UnlockedMembership = [];
-    this.NextSnapshotLimit = 0;
-    this.PreviousProgress = 0;
-    this.Level = 0;
+    
     this.EthAddress = address;
     if (!this.EthAddress || !this.EthAddress.length) {
       let x = '{"action":"Became a Compiler Member", "time": ';
@@ -126,157 +117,18 @@ collection CompilerUser {
       error('Please Check Your Address.');
     }
   }
-  setLevel (user: CompilerUser) {
-    if (!ctx.publicKey) {
-      error('You must sign this record');
-    }
-    let x = Date.now();
-    x = x - this.NextSnapshotLimit;
-    if (x >= 86400000) {
-      error('Your monthly contribution has not been updated. Please run a Update on your account');
-    }
-    if (this.ActivatedMember != true){
-      throw error("You can't Use this Function!");
-    }
-    let b = this.Level;
-    
-    if (this.TotalPoint < 500) {
-      this.Level = 0;
-    } else {if (this.TotalPoint <= 1000) {
-      this.Level = 1;
-    } else {if (this.TotalPoint <= 2000) {
-      this.Level = 2;
-    } else {if (this.TotalPoint <= 4000) {
-      this.Level = 3;
-    } else {if (this.TotalPoint <= 8000) {
-      this.Level = 4;
-    } else {if (this.TotalPoint <= 16000) {
-      this.Level = 5;
-    } else {if (this.TotalPoint <= 32000) {
-      this.Level = 6;
-    } else {if (this.TotalPoint <= 64000) {
-      this.Level = 7;
-    } else {if (this.TotalPoint <= 128000) {
-      this.Level = 8;
-    } else {if (this.TotalPoint <= 256000) {
-      this.Level = 9;
-    } else {if (this.TotalPoint <= 512000) {
-      this.Level = 10;
-    } else {if (this.TotalPoint <= 1024000) {
-      this.Level = 11;
-    } else {if (this.TotalPoint <= 2048000) {
-      this.Level = 12;
-    } else {if (this.TotalPoint <= 4096000) {
-      this.Level = 13;
-    } else {if (this.TotalPoint <= 8192000) {
-      this.Level = 14;
-    } else {if (this.TotalPoint <= 16384000) {
-      this.Level = 15;
-    } else {
-      this.Level = 16;
-    }}}}}}}}}}}}}}}}
-    let y = this.Level;
-    if (b!=y && this.id != ctx.auth){
-      user.TotalPoint += 10;
-    } else{
-      user.TotalPoint = 0;
-    }
-  }
-  userSnapshot (contribution: MonthlyContributionClock) {
-    if (!ctx.publicKey) {
-      error('You must sign this record');
-    }
-    let x = Date.now();
-    x = x - this.NextSnapshotLimit;
-    if (x < 0) {
-      error('You can not update this record. Please wait till next snapshot');
-    }
-    let p = Date.now();
-    p = p - this.NextSnapshotLimit;
-    if (p > 0 && contribution.NextSnapshot <= this.NextSnapshotLimit) {
-      error('Please Update General Snapshot first!');
-    }
-    if (p > 0 && contribution.NextSnapshot > this.NextSnapshotLimit) {
-      error('Please Update your personal record first!');
-    }
-    if (this.ActivatedMember != true){
-      throw error("You can't Use this Function!");
-    }
-    let diff = contribution.turns - this.MonthlySnapshots.length;
-    let pointsDiff = this.TotalPoint - this.PreviousProgress;
-    if (this.MonthlySnapshots.length == 0 && diff == 1) {
-      this.MonthlySnapshots.push(pointsDiff);
-      this.PreviousProgress = this.TotalPoint;
-      this.NextSnapshotLimit = contribution.NextSnapshot;
-    }
-    if (this.MonthlySnapshots.length == 0 && diff > 1) {
-      for (let i = 1; i < diff; i += 1) {
-        this.MonthlySnapshots.push(0);
-      }
-      this.MonthlySnapshots.push(pointsDiff);
-      this.PreviousProgress = this.TotalPoint;
-      this.NextSnapshotLimit = contribution.NextSnapshot;
-    }
-    if (this.MonthlySnapshots.length != 0 && diff > 1) {
-      this.MonthlySnapshots.push(pointsDiff);
-      this.PreviousProgress = this.TotalPoint;
-      this.NextSnapshotLimit = contribution.NextSnapshot;
-      for (let i = 1; i < diff; i += 1) {
-        this.MonthlySnapshots.push(0);
-      }
-    }
-    if (diff != 0) {
-      user.TotalPoint += 30;
-    }
-  }
+  
   
   deleteAccount () {
     if (ctx.publicKey != this.publicKey) {
       error('You are not the Owner of this Account.');
     }
-    if (this.ActivatedMember == true){
-      throw error("You can't Use this method! Delete your Compiler Account First!");
-    } else {
+    
       this.UserAccount.compileUser = false;
       selfdestruct();
-    }
+    
   }
-  
-}
-
-@public
-collection MonthlyContributionClock {
-  id: string;
-  NextSnapshot: number;
-  turns: number;
-  constructor (id:string){
-    if (!ctx.publicKey) {
-      error('This record must be signed');
-    }
-    if ('0x89de820323237a0e6cab8c5f29dfbf2f026f8c1da20c01f5b06b31877252a9d0f493bf95b625b667b1bdb3fb1593553bda1f056220cb2aa0e680316dba8b9a2c' !=ctx.publicKey.toHex()){
-      error('Only the creator can use this constructor!');
-    }
-    this.id = id;
-    let x = Date.now();
-    let y = 86400000 * 28;
-    x = x + y;
-    this.NextSnapshot = x;
-    this.turns = 0;
   }
-  update(){
-    let x = Date.now();
-    let y = x - this.NextSnapshot;
-    let z = 86400000 * 28;
-    let k = y / z;
-    if (y >= 0) {
-      let t = parseInt(k);
-      k += 1;
-      this.turn += k;
-      let w = k * Z;
-      this.NextSnapshot += w;
-    }
-  }
-}
 @public
 collection Chaintrack {
   id: string;
