@@ -20,7 +20,6 @@ export function HeaderContainer()  {
   const valued = inUser;
   const [Loading, setLoading] = useState<boolean>(false);
   const [isLoggedIn] = useIsAuthenticated();
-  update(false);
   const content = Array(12)
     .fill(0)
     .map((_, index) => <p key={index}>Drawer with scroll</p>);
