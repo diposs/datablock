@@ -8,9 +8,9 @@ type StoreState = StoreInterface
 type StoreState2 = StoreInterface2
 type StoreState3 = StoreInterface3
 
-export const useBoundStore = create<StoreState>()(persist((...a) => ({
+export const useBoundStore = create<StoreState>()((...a) => ({
     ...createmobilemenucontrolSlice(...a),
-}), { name: 'app-store',}))
+}))
 export const useBoundStore2 = create<StoreState2>()((...a) => ({
     ...createmobilemenucontrolSlice2(...a),
 }))
